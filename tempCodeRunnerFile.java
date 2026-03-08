@@ -1,65 +1,87 @@
-import java.util.Scanner;
-
-// 1. ABSTRACTION: Class abstrak sebagai kerangka dasar
 abstract class Mahasiswa {
-    private String nama;
-    // 2. ENCAPSULATION: Atribut privat agar tidak dimanipulasi langsung
-    private double[] nilai;
+    private String nama; //menyimpan nama mahasiswa
+    private double[] daftarNilai; // array untuk menyimpan nilai banyak mahasiswa sekaligus 
 
-    public Mahasiswa(String nama, double[] nilai) {
+    public Mahasiswa(String nama, double[] daftarNilai) { // konstruktor untuk inisialisasi nama dan daftar nilai
         this.nama = nama;
-        this.nilai = nilai;
+        this.daftarNilai = daftarNilai; // untuk menyimpan nilai yang diinputkan oleh user ke dalam array daftarNilai
     }
 
-    public String getNama() { return nama; }
-    public double[] getNilai() { return nilai; }
+    // untuk mendapatkan nama mahasiswa dan daftar nilai 
+    public String getNama() { return nama; } 
+    public double[] getDaftarNilai() { return daftarNilai; }  
 
-    // Metode abstrak yang harus diimplementasikan oleh anak cucunya
-    public abstract double hitungRataRata();
+    public abstract double hitungRataRata(); // untuk menghitung rata rata nilai mahasiswa
 }
 
-// 3. INHERITANCE: MahasiswaReguler mewarisi Mahasiswa
-class MahasiswaReguler extends Mahasiswa {
+class MahasiswaReguler extends Mahasiswa { // kelas untuk mahasiswa reguler yang mewarisi kelas Mahasiswa
     public MahasiswaReguler(String nama, double[] nilai) {
         super(nama, nilai);
     }
 
-    // 4. POLYMORPHISM: Implementasi rata-rata standar
-    @Override
+    @Override // untuk menghitung rata rata nilai mahasiswa reguler 
     public double hitungRataRata() {
-        double total = 0;
-        for (double n : getNilai()) {
-            total += n;
+        double total = 0; // untuk menyimpan total nilai mahasiswa reguler
+        for (double n : getDaftarNilai()) { // untuk menghitung total nilai mahasiswa reguler dengan menjumlahkan semua nilai yang ada di dalam array daftarNilai
+            total += n;    // untuk menjumlahkan semua nilai yang ada di dalam array daftarNilai dan menyimpannya ke dalam variabel total
         }
-        return total / getNilai().length;
+        return total / getDaftarNilai().length;
     }
 }
 
-public class SistemNilai {
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+class MahasiswaBeasiswa extends Mahasiswa {
+    public MahasiswaBeasiswa(String nama, double[] nilai) { // konstruktor untuk inisialisasi nama dan daftar nilai mahasiswa beasiswa
+        super(nama, nilai); // untuk menyimpan nilai yang diinputkan oleh user ke dalam array daftarNilai
+    }
 
-        System.out.println("=== Input Data Mahasiswa ===");
-        System.out.print("Masukkan Nama: ");
-        String nama = input.nextLine();
+
+    @Override
+    public double hitungRataRata() { // untuk menghitung nilai rata rata mahasiswa beasiswa 
+        double total = 0;
+        for (double n : getDaftarNilai()) {
+            total += n;
+        }
+        return (total / getDaftarNilai().length) + 5.0; // untuk menghitung rata rata nilai mahasiswa beasiswa dengan menjumlahkan semua nilai yang ada di dalam array daftarNilai kemudian dibagi dengan jumlah mata kuliah yang diinput sebelumnya dan ditambahkan dengan bonus +5 poin
+    }
+}
+
+public class tugasstrukdat {
+    public static void main(String[] args) { 
+        Scanner scanner = new Scanner(System.in); // untuk membaca input dari user
+
+        System.out.println("=== Sistem Input Nilai Mahasiswa ===");
+        
+        System.out.print("Masukkan Nama Mahasiswa: ");
+        String nama = scanner.nextLine(); // untuk menginput nama mahasiswa
+
+        System.out.println("Jenis Mahasiswa:"); 
+        System.out.println("1. Reguler"); // untuk memilih jenis mahasiswa apakah reguler atau beasiswa
+        System.out.println("2. Beasiswa (Bonus +5 poin)"); // untuk memilih jenis mahasiswa apakah reguler atau beasiswa, jika pilih beasiswa maka akan mendapatkan bonus +5 poin pada rata-rata nilai yang dihitung
+        System.out.print("Pilih (1/2): "); // memilih jenis mahasiswa apakah reguler atau beasiswa
+        int pilihan = scanner.nextInt();
 
         System.out.print("Masukkan jumlah mata kuliah: ");
-        int jumlahMk = input.nextInt();
-        double[] nilaiInput = new double[jumlahMk];
+        int jmlMk = scanner.nextInt(); // untuk menginput jumlah mata kuliah yang diambil oleh mahasiswa, 
+        double[] nilaiInput = new double[jmlMk];    // untuk membuat array nilaiInput dengan ukuran sesuai dengan jumlah mata kuliah yang diinput sebelumnya
 
-        for (int i = 0; i < jumlahMk; i++) {
-            System.out.print("Masukkan nilai ke-" + (i + 1) + ": ");
-            nilaiInput[i] = input.nextDouble();
+        // untuk menginput nilai mahasiswa sesuai dengan jumlah mata kuliah yang diinput sebelumnya 
+        for (int i = 0; i < jmlMk; i++) {
+            System.out.print("Masukkan nilai ke-" + (i + 1) + ": "); 
+            nilaiInput[i] = scanner.nextDouble();
+        }
+        Mahasiswa mhs;
+
+        // untuk membuat objek mahasiswa sesuai dengan pilihan jenis mahasiswa yang diinput sebelumnya, jika pilihan 2 maka akan membuat objek MahasiswaBeasiswa, jika tidak maka akan membuat objek MahasiswaReguler
+        if (pilihan == 2) {
+            mhs = new MahasiswaBeasiswa(nama, nilaiInput);
+        } else {
+            mhs = new MahasiswaReguler(nama, nilaiInput);
         }
 
-        // Membuat objek menggunakan konsep Polymorphism
-        Mahasiswa mhs = new MahasiswaReguler(nama, nilaiInput);
-
         System.out.println("\n--- Hasil Perhitungan ---");
-        System.out.println("Nama Mahasiswa: " + mhs.getNama());
-        // Memanggil metode hitungRataRata() tanpa perlu tahu rumus di dalamnya (Abstraction)
-        System.out.printf("Rata-rata Nilai: %.2f\n", mhs.hitungRataRata());
+        System.out.println("Nama: " + mhs.getNama());
+        System.out.printf("Rata-rata: %.2f\n", mhs.hitungRataRata());
 
-        input.close();
+        scanner.close();
     }
 }

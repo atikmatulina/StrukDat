@@ -1,4 +1,4 @@
-## Struktur Data OOP
+## STRUKTUR DATA OOP
 
 | Nama  | Atik Putri Matulina  |
 |-------|----------------------|
@@ -6,20 +6,32 @@
 | NRP   | 5027251128           |
 | Mata Kuliah | Struktur Data dan Pemrograman Berorientasi Objek |
 
-## Folder Structure
-abstract class Mahasiswa {
+## PENJELASAN   
+private double[] daftarNilai
+Ini adalah sebuah array bertipe double. Array adalah struktur data yang menyimpan banyak nilai dalam satu variabel. 
 
     private String nama;
     private double[] daftarNilai;
-    
-    
 
-## Diagram Mahasiswa Reguler dan Beasiswa 
-Mahasiswa (Abstract Class)
-├── MahasiswaReguler   → hitungRataRata() normal
-└── MahasiswaBeasiswa  → hitungRataRata() + bonus 5 poin
+    public Mahasiswa(String nama, double[] daftarNilai) {
+        this.nama = nama;
+        this.daftarNilai = daftarNilai;
+    }
 
-# StrukDat
+    public String getNama() { return nama; }
+    public double[] getDaftarNilai() { return daftarNilai; }
 
-# StrukDat
-# StrukDat
+    public abstract double hitungRataRata();}
+
+## DIAGRAM HUBUNGAN ANTAR CLASS
+        ┌─────────────────────────|
+        │       Mahasiswa         │
+        │ - nama: String          │
+        │ - daftarNilai: double[] │
+        │ + getNama()             │
+        │ + getDaftarNilai()      │
+        │ + hitungRataRata()      │ 
+        └───────────┬─────────────┘
+          ┌─────────┴──────────┐
+┌─────────▼──────┐   ┌─────────▼────────┐
+│MahasiswaReguler│   │MahasiswaBeasiswa │

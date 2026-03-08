@@ -1,21 +1,25 @@
-## Getting Started
+## Struktur Data OOP
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+| Nama  | Atik Putri Matulina  |
+|-------|----------------------|
+| Kelas | A                    |
+| NRP   | 5027251128           |
+| Mata Kuliah | Struktur Data dan Pemrograman Berorientasi Objek |
 
 ## Folder Structure
+abstract class Mahasiswa {
 
-The workspace contains two folders by default, where:
+    private String nama;
+    private double[] daftarNilai;
+    
+    
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Diagram Mahasiswa Reguler dan Beasiswa 
+Mahasiswa (Abstract Class)
+├── MahasiswaReguler   → hitungRataRata() normal
+└── MahasiswaBeasiswa  → hitungRataRata() + bonus 5 poin
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
 # StrukDat
+
 # StrukDat
 # StrukDat
